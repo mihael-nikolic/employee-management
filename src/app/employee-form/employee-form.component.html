@@ -1,0 +1,55 @@
+<div id="formContent">
+  <h1>Novi zaposlenik</h1>
+
+  <div id="employeeCard" class="mat-elevation-z8">
+    <form [formGroup]="employeeForm" class="myform">
+      <mat-card>
+        <mat-card-content>
+          <div class="myInputs">
+            <mat-form-field class="example-full-width">
+              <mat-label>Ime</mat-label>
+              <input matInput formControlName="firstName" />
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Prezime</mat-label>
+              <input matInput formControlName="lastName" />
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Datum rođenja</mat-label>
+              <input matInput formControlName="dateOfBirth" />
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Pozicija</mat-label>
+              <input matInput formControlName="jobTitle" />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button
+            class="actionButtons"
+            (click)="onCancel()"
+            type="button"
+            mat-raised-button
+            color="warn"
+          >
+            Poništi
+          </button>
+          <button
+            class="actionButtons"
+            [disabled]="employeeForm.invalid"
+            type="button"
+            (click)="onSubmit()"
+            mat-raised-button
+            color="primary"
+          >
+            Spremi
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>

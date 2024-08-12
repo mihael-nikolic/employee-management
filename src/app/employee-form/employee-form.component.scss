@@ -1,0 +1,35 @@
+.actionButtons {
+  margin-right: 20px;
+  width: 100px;
+}
+
+#employeeCard {
+  min-width: 800px;
+}
+
+#formContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.myInputs {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+@media (max-width: 900px) {
+  #employeeCard {
+    min-width: 400px;
+  }
+  #formContent {
+    margin: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  #employeeCard {
+    min-width: 320px;
+  }
+}

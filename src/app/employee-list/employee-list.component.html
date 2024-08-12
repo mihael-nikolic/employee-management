@@ -1,0 +1,89 @@
+<h1>Popis Zaposlenika</h1>
+
+<mat-form-field>
+  <mat-label>Pretraži</mat-label>
+  <input
+    matInput
+    placeholder="po imenu ili prezimenu..."
+    (keyup)="applyFilter($event)"
+  />
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Filtriraj po poziciji</mat-label>
+  <mat-select
+    #selectedValue
+    [value]=""
+    (selectionChange)="applyJobPositionFilter($event)"
+  >
+    <mat-option value=""></mat-option>
+    <mat-option value="programer">Programer</mat-option>
+    <mat-option value="analitičar">Analitičar</mat-option>
+    <mat-option value="dizajner">Dizajner</mat-option>
+    <mat-option value="konzultant">Konzultant</mat-option>
+    <mat-option value="manager">Manager</mat-option>
+    <mat-option value="inženjer">Inženjer</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="firstName">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sortiraj po imenu"
+    >
+      Ime
+    </th>
+    <td mat-cell *matCellDef="let employee">{{ employee.firstName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastName">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sortiraj po prezimenu"
+    >
+      Prezime
+    </th>
+    <td mat-cell *matCellDef="let employee">{{ employee.lastName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateOfBirth">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sortiraj po datumu rodjenja"
+    >
+      Datum rođenja
+    </th>
+    <td mat-cell *matCellDef="let employee">
+      {{ employee.dateOfBirth | date : "dd.MM.yyyy." }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="jobTitle">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sortiraj po poziciji"
+    >
+      Pozicija
+    </th>
+    <td mat-cell *matCellDef="let employee">{{ employee.jobTitle }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[10, 5, 20]"
+  showFirstLastButtons
+  class="mat-elevation-z8 paginacija"
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>
