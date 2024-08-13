@@ -8,22 +8,21 @@
     (keyup)="applyFilter($event)"
   />
 </mat-form-field>
-<mat-form-field>
-  <mat-label>Filtriraj po poziciji</mat-label>
-  <mat-select
-    #selectedValue
-    [value]=""
-    (selectionChange)="applyJobPositionFilter($event)"
-  >
-    <mat-option value=""></mat-option>
-    <mat-option value="programer">Programer</mat-option>
-    <mat-option value="analitičar">Analitičar</mat-option>
-    <mat-option value="dizajner">Dizajner</mat-option>
-    <mat-option value="konzultant">Konzultant</mat-option>
-    <mat-option value="manager">Manager</mat-option>
-    <mat-option value="inženjer">Inženjer</mat-option>
-  </mat-select>
-</mat-form-field>
+
+<div>
+  <mat-form-field>
+    <mat-label>Filtriraj po poziciji</mat-label>
+    <mat-select (selectionChange)="applyJobPositionFilter($event)">
+      <mat-option>Svi</mat-option>
+      <mat-option value="programer">Programer</mat-option>
+      <mat-option value="analitičar">Analitičar</mat-option>
+      <mat-option value="dizajner">Dizajner</mat-option>
+      <mat-option value="konzultant">Konzultant</mat-option>
+      <mat-option value="manager">Manager</mat-option>
+      <mat-option value="inženjer">Inženjer</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef="firstName">

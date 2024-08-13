@@ -70,16 +70,18 @@ export class EmployeeListComponent implements OnInit {
   }
 
   applyJobPositionFilter($event: any) {
-    let filteredData = _.filter(this.employeesDataArray, (item) => {
-      return item.jobTitle.toLowerCase() == $event.value.toLowerCase();
-    });
-    if ($event.value === '') {
-      this.dataSource = new MatTableDataSource<Employee>(
-        this.employeesDataArray
-      );
+    var filteredData: any = [];
+    if ($event.value === undefined) {
+      this.dataSource = new MatTableDataSource(this.employeesDataArray);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } else {
+      filteredData = _.filter(this.employeesDataArray, (item) => {
+        return item.jobTitle.toLowerCase() == $event.value.toLowerCase();
+      });
       this.dataSource = new MatTableDataSource(filteredData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 }
