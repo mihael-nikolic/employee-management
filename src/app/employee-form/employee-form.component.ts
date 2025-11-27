@@ -9,6 +9,7 @@ import { Employee } from '../interfaces/employee';
   styleUrls: ['./employee-form.component.scss'],
 })
 export class EmployeeFormComponent {
+  constructor(private employeeService: EmployeeService) {}
   newEmployee!: Employee;
 
   employeeForm = new FormGroup({
@@ -40,8 +41,19 @@ export class EmployeeFormComponent {
       jobTitle: this.employeeForm.controls['jobTitle'].value as string,
     };
 
-    console.log(this.newEmployee);
-    this.employeeForm.reset();
+    // Try to create employee via service. Service will emit updated list
+    // (falls back to local list if POST fails).
+    this.employeeService.createEmployee(this.newEmployee).subscribe({
+      next: (res: any) => {
+        // success — service already updated employees$ stream
+        this.employeeForm.reset();
+      },
+      error: (err: any) => {
+        console.error('Failed to create employee', err);
+        // still reset form to allow new input
+        this.employeeForm.reset();
+      },
+    });
   }
 
   onCancel() {

@@ -23,44 +23,30 @@ export class EmployeeListComponent implements OnInit {
   constructor(private employeeService: EmployeeService) {}
 
   ngOnInit() {
+    // Load from service and subscribe to the shared employees stream
+    this.employeeService.loadEmployees();
     this.updateDataSource();
   }
 
   updateDataSource() {
-    this.employeeService.getEmployees().subscribe({
-      next: (response: any) => {
-        if (response && response.success) {
-          this.employeesDataArray = response.data.map((employee: any) => ({
-            ...employee,
-            dateOfBirth: new Date(employee.dateOfBirth),
-          }));
-          this.dataSource = new MatTableDataSource<Employee>(
-            this.employeesDataArray
-          );
-        } else {
-          console.error('API response indicates failure');
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.dataSource.filterPredicate = function (
-          data,
-          filter: string
-        ): boolean {
-          const fullName = `${data.firstName.toLowerCase()} ${data.lastName.toLowerCase()}`;
-          return (
-            data.firstName.toLowerCase().includes(filter) ||
-            data.lastName.toLowerCase().includes(filter) ||
-            fullName.includes(filter)
-          );
-        };
-
-        console.log('Data loaded successfully');
-      },
+    this.employeeService.employees$.subscribe((employees: Employee[]) => {
+      this.employeesDataArray = employees;
+      this.dataSource = new MatTableDataSource<Employee>(
+        this.employeesDataArray
+      );
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = function (
+        data,
+        filter: string
+      ): boolean {
+        const fullName = `${data.firstName.toLowerCase()} ${data.lastName.toLowerCase()}`;
+        return (
+          data.firstName.toLowerCase().includes(filter) ||
+          data.lastName.toLowerCase().includes(filter) ||
+          fullName.includes(filter)
+        );
+      };
     });
   }
 
